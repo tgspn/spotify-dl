@@ -12,10 +12,12 @@ const search = promisify(youtubeSearch);
  */
 const getLink = async songName => {
   try {
-    const result = await search(songName);
-    console.log(result.videos);
+
+	  console.log(songName);
+	  const result = await search(songName);
+  //  console.log(result.videos);
     const [topResult] = result.videos;
-    console.log(topResult);
+    //console.log(topResult);
     if (topResult) {
       const youtubeLink = 'https://youtube.com' + topResult.url;
 
