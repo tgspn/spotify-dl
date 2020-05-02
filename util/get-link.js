@@ -15,10 +15,12 @@ const getLink = async songName => {
     const result = await search(songName);
     
     const [topResult] = result.videos;
-
+if(topResult){
     const youtubeLink = 'https://youtube.com' + topResult.url;
 
     return youtubeLink;
+}
+return "";
   } catch (error) {
     return error;
   }

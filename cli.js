@@ -135,7 +135,14 @@ if (!input[0]) {
           dir = path.join(dir, '.spdlcache');
           
           async function downloadLoop(trackIds, counter) {
-            const songNam = await spotifye.extrTrack(trackIds[counter]);
+	   if (counter == trackIds.length) {
+              console.log(`Finished. Saved ${counter} Songs.`);
+              process.exit(0);
+	      return;
+            }
+          
+	
+	    const songNam = await spotifye.extrTrack(trackIds[counter]);
             counter++;
             if(cli.flags.spin == true) {
               spinner.info(`${counter}. Song: ${songNam.name} - ${songNam.artists[0]}`);
@@ -145,7 +152,11 @@ if (!input[0]) {
             counter--;
 
             const ytLink = await getLink(songNam.name + songNam.artists[0]);
-
+if(!ytLink.startWith('http')){
+ console.log(`Error to get link:  ${ytLink} `);
+		                process.exit(0);
+		                return;
+}
             const output = path.resolve((cli.flags.output != null) ? cli.flags.output : process.cwd(), songData.name, await filter.validateOutput(`${songNam.name} - ${songNam.artists[0]}.mp3`));
             if(cli.flags.spin == true) {
               spinner.start("Downloading...");
@@ -153,17 +164,24 @@ if (!input[0]) {
               console.log("Downloading...");
             }
 
+		  if(ytLink){
+console.log(ytLink);
+
             download(ytLink, output, (cli.flags.spin == true) ? spinner : null, async function() {
               await cache.write(dir, ++counter);
+		    console.log('callback')
               await mergeMetadata(output, songNam, (cli.flags.spin == true) ? spinner : null, function() {
+		    console.log('callback1')
                 if(counter == trackIds.length) {
-                  console.log(`\nFinished. Saved ${counter} Songs at ${output}.`);
+                  console.log(`Finished. Saved ${counter} Songs at ${output}.`);
+//		  process.exit(0);
                 } else {
+		    console.log('downloadLoop')
                   downloadLoop(trackIds, counter);
                 }
               });
             })
-
+		  }
           }
           downloadLoop(songData.tracks, cacheCounter);
           break;
@@ -185,6 +203,11 @@ if (!input[0]) {
           dir = path.join(dir, '.spdlcache');
 
           async function downloadLoop(trackIds, counter) {
+           if (counter == trackIds.length) {
+	               console.log(`Finished. Saved ${counter} Songs.`);
+	               process.exit(0);
+	               return;
+	             }
             const songNam = await spotifye.extrTrack(trackIds[counter]);
             counter++;
             if(cli.flags.spin == true) {
