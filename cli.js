@@ -153,7 +153,7 @@ if (!input[0]) {
 
             const ytLink = await getLink(songNam.name + songNam.artists[0]);
             if (!ytLink.startsWith('http')) {
-              console.log(`Error to get link:  ${ytLink} `);
+              console.log(`Finished. Error to get link:  ${ytLink} `);
               process.exit(0);
               return;
             }
