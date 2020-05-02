@@ -152,7 +152,7 @@ if (!input[0]) {
             counter--;
 
             const ytLink = await getLink(songNam.name + songNam.artists[0]);
-            if (!ytLink.startsWithith('http')) {
+            if (!ytLink.startsWith('http')) {
               console.log(`Error to get link:  ${ytLink} `);
               process.exit(0);
               return;
