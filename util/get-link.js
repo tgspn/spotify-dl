@@ -13,14 +13,14 @@ const search = promisify(youtubeSearch);
 const getLink = async songName => {
   try {
     const result = await search(songName);
-    
-    const [topResult] = result.videos;
-if(topResult){
-    const youtubeLink = 'https://youtube.com' + topResult.url;
 
-    return youtubeLink;
-}
-return "";
+    const [topResult] = result.videos;
+    if (topResult) {
+      const youtubeLink = 'https://youtube.com' + topResult.url;
+
+      return youtubeLink;
+    }
+    return "";
   } catch (error) {
     return error;
   }
