@@ -153,11 +153,11 @@ if (!input[0]) {
 
             const ytLink = await getLink(songNam.name + ' ' + songNam.artists[0]);
             if (!ytLink.startsWith('http')) {
-              console.log(`Finished. Error to get link:  ${ytLink} ${ songNam.name+' '+songNam.artists[0]}`);
+              console.log(`Finished. Error to get link:  ${ytLink} ${songNam.name + ' ' + songNam.artists[0]}`);
               process.exit(0);
               return;
             }
-            const output = path.resolve((cli.flags.output != null) ? cli.flags.output : process.cwd(), songData.name, await filter.validateOutput(`${songNam.name} - ${songNam.artists[0]}.mp3`));
+            const output = path.resolve((cli.flags.output != null) ? cli.flags.output : process.cwd(), songData.name, await filter.validateOutput(`${("000" + counter).slice(-4)}-${songNam.name} - ${songNam.artists[0]}.mp3`));
             if (cli.flags.spin == true) {
               spinner.start("Downloading...");
             } else if (cli.flags.spin == false) {
